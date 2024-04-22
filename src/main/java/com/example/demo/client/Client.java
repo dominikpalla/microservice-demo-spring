@@ -1,17 +1,11 @@
-package com.example.demo;
+package com.example.demo.client;
 
 import okhttp3.*;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class Client {
 
-    private static final String ENDPOINT = "http://localhost:8080/api/users";
+    private static final String ENDPOINT = "http://localhost:8080/api/jokes";
 
     public static void main(String[] args) {
         registerUser("a@a.a", "a");
@@ -22,13 +16,13 @@ public class Client {
         getUserByEmail("a@a.a");
     }
 
-    public static void registerUser(String email, String password) {
+    public static void createJoke(String text, int humourRatio) {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, "{\"email\": \"" + email + "\", \"password\": \"" + password + "\"}");
         Request request = new Request.Builder()
-                .url(ENDPOINT + "/register")
+                .url(ENDPOINT + "/new")
                 .post(body)
                 .addHeader("Content-Type", "application/json")
                 .build();
