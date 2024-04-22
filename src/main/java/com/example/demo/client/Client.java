@@ -8,19 +8,19 @@ public class Client {
     private static final String ENDPOINT = "http://localhost:8080/api/jokes";
 
     public static void main(String[] args) {
-        registerUser("a@a.a", "a");
-        getUserByEmail("a@a.a");
-        updateUser("a@a.a", "b");
-        getUserByEmail("a@a.a");
-        deleteUser("a@a.a");
-        getUserByEmail("a@a.a");
+        createJoke("Šel ftip a zakopl o ftip.", 1);
+        getJoke(1L);
+        updateJokeHumourRatio(1L, 5);
+        getJoke(1L);
+        deleteJoke(1L);
+        getJoke(1L);
     }
 
     public static void createJoke(String text, int humourRatio) {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"email\": \"" + email + "\", \"password\": \"" + password + "\"}");
+        RequestBody body = RequestBody.create(mediaType, "{\"text\": \"" + text + "\", \"humourRatio\": " + humourRatio + "}");
         Request request = new Request.Builder()
                 .url(ENDPOINT + "/new")
                 .post(body)
@@ -32,17 +32,17 @@ public class Client {
                 throw new IOException("Unexpected code " + response);
             }
 
-            System.out.println("User registered successfully: " + response.body().string());
+            System.out.println("Joke has been created: " + response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    public static void getUserByEmail(String email) {
+    public static void getJoke(Long id) {
         OkHttpClient client = new OkHttpClient();
 
-        String url = ENDPOINT + "/" + email;
+        String url = ENDPOINT + "/" + id;
 
         Request request = new Request.Builder()
                 .url(url)
@@ -54,18 +54,18 @@ public class Client {
             }
 
             String responseBody = response.body().string();
-            System.out.println("User details: " + responseBody);
+            System.out.println("Joke details: " + responseBody);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void updateUser(String email, String newPassword) {
+    public static void updateJokeHumourRatio(Long id, int humourRatio) {
         OkHttpClient client = new OkHttpClient();
 
-        String url = ENDPOINT + "/" + email;
+        String url = ENDPOINT + "/update";
 
-        String json = "{\"password\": \"" + newPassword + "\"}";
+        String json = "{\"id\": " + id + ", \"humourRatio\": " + humourRatio + "}";
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(json, JSON);
 
@@ -80,16 +80,16 @@ public class Client {
             }
 
             String responseBody = response.body().string();
-            System.out.println("User updated successfully: " + responseBody);
+            System.out.println("Joke has been updated: " + responseBody);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void deleteUser(String email) {
+    public static void deleteJoke(Long id) {
         OkHttpClient client = new OkHttpClient();
 
-        String url = ENDPOINT + "/" + email;
+        String url = ENDPOINT + "/" + id;
 
         Request request = new Request.Builder()
                 .url(url)
@@ -101,7 +101,8 @@ public class Client {
                 throw new IOException("Unexpected response code: " + response);
             }
 
-            System.out.println("User deleted successfully");
+            String responseBody = response.body().string();
+            System.out.println("Joke has been deleted: " + responseBody);
         } catch (IOException e) {
             e.printStackTrace();
         }
