@@ -28,21 +28,11 @@ public class JokeController {
 
     @PutMapping("/update")
     public Joke updateUser(@RequestBody Joke joke) {
-        Joke originalJoke = jokeService.getJoke(joke.getId());
-        if (originalJoke == null) {
-            return null;
-        }
-
         return jokeService.updateJoke(joke);
     }
 
     @DeleteMapping("/{id}")
     public Joke deleteUser(@PathVariable Long id) {
-        Joke joke = jokeService.getJoke(id);
-        if (joke == null) {
-            return null;
-        }
-
         return jokeService.deleteJoke(id);
     }
 

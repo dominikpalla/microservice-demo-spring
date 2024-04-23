@@ -1,11 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-
 @Entity
 @Table(name = "jokes")
 public class Joke {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

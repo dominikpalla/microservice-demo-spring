@@ -20,7 +20,9 @@ public class Client {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"text\": \"" + text + "\", \"humourRatio\": " + humourRatio + "}");
+        RequestBody body = RequestBody.create(mediaType,
+                "{\"text\": \"" + text + "\", \"humourRatio\": " + humourRatio + "}");
+
         Request request = new Request.Builder()
                 .url(ENDPOINT + "/new")
                 .post(body)
@@ -66,8 +68,8 @@ public class Client {
         String url = ENDPOINT + "/update";
 
         String json = "{\"id\": " + id + ", \"humourRatio\": " + humourRatio + "}";
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(json, JSON);
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(json, mediaType);
 
         Request request = new Request.Builder()
                 .url(url)
