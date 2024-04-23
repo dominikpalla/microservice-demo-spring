@@ -27,12 +27,12 @@ public class JokeController {
     }
 
     @PutMapping("/update")
-    public Joke updateUser(@RequestBody Joke joke) {
+    public Joke updateJoke(@RequestBody Joke joke) {
         return jokeService.updateJoke(joke);
     }
 
     @DeleteMapping("/{id}")
-    public Joke deleteUser(@PathVariable Long id) {
+    public Joke deleteJoke(@PathVariable Long id) {
         return jokeService.deleteJoke(id);
     }
 
