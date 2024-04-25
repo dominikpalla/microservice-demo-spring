@@ -28,7 +28,15 @@ public class JokeServiceImpl implements JokeService {
 
     @Override
     public Joke updateJoke(Joke joke) {
-        if(jokeRepository.findById(joke.getId()).isPresent()) {
+        Optional<Joke> jokeDB = jokeRepository.findById(joke.getId());
+
+        if(jokeDB.isPresent()) {
+            if(joke.getText() == null)
+                joke.setText(jokeDB.get().getText());
+
+            if(joke.getHumourRatio() == 0)
+                joke.setHumourRatio(jokeDB.get().getHumourRatio());
+
             return jokeRepository.save(joke);
         }else{
             return null;
